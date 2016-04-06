@@ -29,4 +29,4 @@ First you will need to [create a Telegram bot](https://core.telegram.org/bots#3-
 
 You will also need to have [node.js](http://nodejs.org/) installed.
 
-With both of them you can run `POWPOWBOT_TOKEN="YOUR_TOKEN_HERE" node fps.js `
+With both of them you can run `POWPOWBOT_TOKEN="YOUR_TOKEN_HERE" node powpow.js `

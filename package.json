@@ -1,15 +1,15 @@
 {
-  "name": "telegrambot-fpsgame",
+  "name": "PowPowBot",
   "version": "0.0.1",
-  "main": "fps.js",
+  "main": "powpow.js",
   "scripts": {
-    "start": "node fps.js"
+    "start": "node powpow.js"
   },
   "engines": {
     "node": "5.3.0"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dygufa/telegrambot-fpsgame"
+    "url": "https://github.com/dygufa/PowPowBot"
   }
 }
