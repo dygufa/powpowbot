@@ -3,9 +3,7 @@
  * Developed by Rodrigo Araujo based on Guilherme Henrique Sehn's project
  * Original game by Eigen Lenk
  */
-var http = require('http'),
-    url = require('url'),
-    fs = require('fs'),
+var fs = require('fs'),
     events = require('events'),
     telegramBotAPI = require('node-telegram-bot-api');
 
