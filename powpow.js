@@ -113,7 +113,7 @@ var Util = {
     },
 
     colorize: function(color, text) {
-        return color
+        return text
         //return '<span style="color:' + color + '">' + text + '</span>'
     }
 }
