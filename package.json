@@ -11,5 +11,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/dygufa/PowPowBot"
+  },
+  "dependencies": {
+    "node-telegram-bot-api": "^0.21.1"
   }
 }
