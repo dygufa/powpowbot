@@ -1,6 +1,6 @@
-Text-based FPS Telegram Bot
+Text-based FPS Telegram Bot or PowPow for friends
 ==============
-Telegram Bot for a text-based FPS game made by [Rodrigo Araujo](http://www.dygufa.com/) based on [Guilherme Sehn's](http://www.guisehn.com/) Text-based FPS [project](https://github.com/guisehn/text-based-fps) 
+Telegram Bot for a text-based FPS game or just PowPow made by [Rodrigo Araujo](http://www.dygufa.com/) based on [Guilherme Sehn's](http://www.guisehn.com/) Text-based FPS [project](https://github.com/guisehn/text-based-fps) 
 
 How to play
 ----------
@@ -25,7 +25,7 @@ First you need to start a conversation with [PowPow](telegram.me/powpowbot). Aft
 How to run on your server
 ----------
 
-First you will need to (create a Telegram bot)[https://core.telegram.org/bots#3-how-do-i-create-a-bot], it will allow you to get the bot token.
+First you will need to [create a Telegram bot](https://core.telegram.org/bots#3-how-do-i-create-a-bot), it will allow you to get the bot token.
 
 You will also need to have [node.js](http://nodejs.org/) installed.
 
