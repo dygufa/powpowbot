@@ -650,7 +650,7 @@ Room.prototype.is_safe_place = function(x, y) {
 }
 
 powpowbot.on('message', function(msg) {
-    var cmd = msg.text,
+    var cmd = msg.text.toLowerCase(),
         user_id = msg.from.id,
         user_first_name = msg.from.first_name,
         player,
