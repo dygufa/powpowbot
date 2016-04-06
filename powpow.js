@@ -814,7 +814,9 @@ powpowbot.on('message', function(msg) {
     }
 
     if (cmd.match(/^move (north|south|east|west)$/)) {
-        player.move(cmd.split(' ')[1][0])
+        var direction = cmd.split(' ')[1][0]
+        player.move(direction)
+        player.turn(direction)
         powpowbot.sendMessage(user_id, player.look_map(), {
             parse_mode: 'HTML'
         })
