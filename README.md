@@ -5,7 +5,7 @@ It's a Telegram bot for a text-based FPS game made by [Rodrigo Araujo](http://ww
 How to play
 ----------
 
-First you need to start a conversation with [PowPow](telegram.me/powpowbot). After he will ask you to join a room by typing `/room Room Name` (e.g.: `/room powpow1`) and that's it! :)
+First you need to start a conversation with [PowPow](http://telegram.me/powpowbot). After he will ask you to join a room by typing `/room Room Name` (e.g.: `/room powpow1`) and that's it! :)
 
 ### Commands:
 
