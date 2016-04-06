@@ -363,8 +363,8 @@ Player.prototype.look_map = function() {
         'me': true
     })
 
-    text += 'Players on this room: ' + Object.keys(this.room.players).length
-    text += '\n'
+    txt += 'Players on this room: ' + Object.keys(this.room.players).length
+    txt += '\n'
 
     txt += '<pre>'
 
