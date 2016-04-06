@@ -3,3 +3,4 @@ err.log
 out.log
 node_modules
 teste.js
+.package.json.swp

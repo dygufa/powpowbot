@@ -120,9 +120,9 @@ var Util = {
 /**
  * Player class
  */
-function Player(name) {
+function Player(telegram_user_id, telegram_user_name) {
     // Fixed session properties
-    this.sid = Util.generate_id()
+    this.sid = telegram_user_id
     this.name = name
     this.room = null
     this.updated = Util.current_timestamp()
@@ -153,9 +153,11 @@ Player.prototype.join_room = function(room_name) {
     }
 
     this.room.add_player(this)
-    return this.room.messages.length
+    //return this.room.messages.length
+    return true
 }
 
+/*
 Player.prototype.rename = function(new_name) {
     var now = Util.current_timestamp()
 
@@ -179,6 +181,7 @@ Player.prototype.rename = function(new_name) {
 
     return [true, new_name]
 }
+*/
 
 Player.prototype.touch = function() {
     this.updated = Util.current_timestamp()
@@ -207,10 +210,10 @@ Player.prototype.fire = function() {
             this.room.players[hit[i].sid].health -= ammo_power
 
             var killed = false
-            var msg_data = {
+            /*var msg_data = {
                 receiver: hit[i].sid,
                 text: null
-            }
+            }*/
 
             if (this.room.players[hit[i].sid].health <= 0) {
                 killed = true
@@ -228,8 +231,9 @@ Player.prototype.fire = function() {
                 result.hit.push(Server.players[hit[i].sid].name)
             }
 
-            msg_data.text = Util.generate_hit_message(this.name, killed)
-            this.send_message(msg_data, hit[i].sid)
+            //msg_data.text = Util.generate_hit_message(this.name, killed)
+            // this.send_message(msg_data, hit[i].sid)
+            powpowbot.sendMessage(hit[i].sid, Util.generate_hit_message(this.name, killed));
         }
 
     return result
@@ -419,6 +423,7 @@ Player.prototype.visible_to_me = function(only_enemies) {
     return found
 }
 
+/*
 Player.prototype.send_message = function(data, receiver) {
     this.room.messages.push(data)
 
@@ -431,6 +436,7 @@ Player.prototype.send_message = function(data, receiver) {
         }
     }
 }
+*/
 
 Player.prototype.quit = function() {
     if (this.room !== null) {
@@ -643,77 +649,6 @@ Room.prototype.is_safe_place = function(x, y) {
     return true
 }
 
-/**
- * Long polling ajax for messages
- */
-/*
-var receive_messages = function(req, res)
-{
-	var	cookies = {},
-		params = url.parse(req.url, true).query
-
-	req.headers.cookie && req.headers.cookie.split(';').forEach(function(cookie)
-	{
-		var parts = cookie.split('=')
-		cookies[parts[0].trim()] = (parts[1] || '').trim()
-	})
-
-	if (typeof(cookies.sid) !== 'string' || typeof(Server.players[cookies.sid]) === 'undefined' || Server.players[cookies.sid].room === null)
-	{
-		res.writeHead(401)
-		res.end()
-		return
-	}
-
-	var player = Server.players[cookies.sid]
-	var last = (typeof(params.last) === 'string' && params.last.match(/^[0-9]+$/) && parseInt(params.last) > 0) ? parseInt(params.last) : 0
-	var msg = []
-
-	player.touch()
-
-	if (last > player.room.messages.length)
-	{
-		res.writeHead(401, {'Content-Type': 'text/plain'})
-		res.end('last too high')
-		return
-	}
-
-	var callback, timeout = setTimeout(function()
-	{
-		Server.events.removeListener(cookies.sid, callback)
-		res.writeHead(307, {'Content-Type': 'text/plain'})
-		res.end('timeout')
-	}, 60 * 1000)
-
-	callback = function()
-	{
-		for (var i = last; i < player.room.messages.length; i++)
-		{
-			if ((typeof(player.room.messages[i].sender) !== 'undefined' && player.room.messages[i].sender == cookies.sid) || (typeof(player.room.messages[i].receiver) !== 'undefined' && player.room.messages[i].receiver !== null && player.room.messages[i].receiver != cookies.sid))
-			{
-				continue
-			}
-
-			msg.push(player.room.messages[i].text)
-		}
-
-		clearTimeout(timeout)
-
-		res.write(player.room.messages.length + '\n')
-		res.end(msg.join('\n'))
-	}
-
-	if (last < player.room.messages.length)
-		callback()
-	else
-		Server.events.once(cookies.sid, callback)
-}
-*/
-
-/**
- * Send commands
- */
-
 powpowbot.on('message', function(msg) {
     var cmd = msg.text,
         user_id = msg.from.id,
@@ -722,7 +657,7 @@ powpowbot.on('message', function(msg) {
         match;
 
     if (typeof Server.players[user_id] == "undefined") {
-        player = new Player(user_first_name)
+        player = new Player(user_id, user_first_name)
         Server.players[user_id] = player
     } else {
         player = Server.players[user_id]
