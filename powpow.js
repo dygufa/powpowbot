@@ -768,7 +768,7 @@ powpowbot.on('message', function(msg) {
         return
     }
 
-    if (cmd == 'exit' || cmd == 'quit') {
+    if (cmd == 'exit' || cmd == '/quit') {
         player.quit()
         powpowbot.sendMessage(user_id, 'You\'re now out of the room.\nType the name of the room you want to enter')
         return
