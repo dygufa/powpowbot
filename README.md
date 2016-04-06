@@ -1,19 +1,8 @@
-Text-based FPS
+Text-based FPS Telegram Bot
 ==============
-Text-based FPS node.js experiment made by [Guilherme Sehn](http://www.guisehn.com/). This is a free-time project, so it may have some bugs. =P
+Telegram Bot for a text-based FPS game made by [Rodrigo Araujo](http://www.dygufa.com/) based on [Guilherme Sehn's](http://www.guisehn.com/) Text-based FPS [project](https://github.com/guisehn/text-based-fps) 
 
-[Original game](http://eigen.pri.ee/shooter/) and map made by [Eigen Lenk](http://eigen.pri.ee/).
-
-Structure
----------
-- `fps.js`: the server-side javascript file which contains the game logic
-- `page.html`: contains all the client-side code
-- `map.txt`: the game map
-
-How to run
+How to use
 ----------
-Clone/download text-based-fps from [github](https://github.com/ghsehn/text-based-fps), then run `node fps.js` to start the server.
 
-You will need to have [node.js](http://nodejs.org/) installed. You can optionally use [nodejitsu/forever](https://github.com/nodejitsu/forever) CLI tool to maintain the server online even when you close the SSH session. 
-
-There's a running example [here](https://text-based-fps.herokuapp.com/).
+Soon
