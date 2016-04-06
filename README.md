@@ -1,11 +1,11 @@
 Text-based FPS Telegram Bot or PowPow for friends
 ==============
-It's a Telegram bot for a text-based FPS game made by [Rodrigo Araujo](http://www.dygufa.com/) based on [Guilherme Sehn's](http://www.guisehn.com/) Text-based FPS [project](https://github.com/guisehn/text-based-fps). 
+It's a Telegram bot for a text-based FPS game. It was made by [Rodrigo Araujo](http://www.dygufa.com/) based on [Guilherme Sehn's](http://www.guisehn.com/) Text-based FPS [project](https://github.com/guisehn/text-based-fps). 
 
 How to play
 ----------
 
-First you need to start a conversation with [PowPow](http://telegram.me/powpowbot). After he will ask you to join a room by typing `/room Room Name` (e.g.: `/room powpow1`) and that's it! :)
+First of all you need to start a conversation with [PowPow](http://telegram.me/powpowbot). After that he will ask you to join a room by typing `/room Room Name` (e.g.: `/room powpow1`) and that's it! Now you can use the commands listed below to play with your friends. :)
 
 ### Commands:
 
