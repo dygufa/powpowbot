@@ -105,17 +105,18 @@ var Util = {
         else
             msg = 'uh oh! ' + who + ' shot you!'
 
-        return Util.colorize('red', msg)
+        return msg
     },
 
+    /*
     generate_rename_message: function(old_name, new_name) {
-        return Util.colorize('lime', old_name + ' changed his name to ' + new_name)
+        return old_name + ' changed his name to ' + new_name)
     },
 
     colorize: function(color, text) {
         return text
         //return '<span style="color:' + color + '">' + text + '</span>'
-    }
+    }*/
 }
 
 /**
@@ -127,7 +128,7 @@ function Player(telegram_user_id, telegram_user_name) {
     this.name = telegram_user_name
     this.room = null
     this.updated = Util.current_timestamp()
-    this.renamed_at = 0
+    //this.renamed_at = 0
 
     // Game properties
     this.x = null
