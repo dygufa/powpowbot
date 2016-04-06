@@ -730,7 +730,7 @@ powpowbot.on('message', function(msg) {
     }
 
     if (cmd.match(/^\/(start|help)$/)) {
-    	instructions = "* /room - Choose the room \n"
+    	var instructions = "* /room - Choose the room \n"
 		instructions += "* /quit - Quit the room \n"
 		instructions += "* look - Show the room map and the enemies on your front \n"
 		instructions += "* move north/south/west/east - Move to another place \n"
@@ -859,18 +859,16 @@ powpowbot.on('message', function(msg) {
 
     if (cmd.match(/^turn (north|south|east|west)$/)) {
         player.turn(cmd.split(' ')[1][0])
-        powpowbot.sendMessage(user_id, '')
         return
     }
 
     if (cmd == 'turn around') {
         player.turn_around()
-        powpowbot.sendMessage(user_id, '')
         return
     }
 
     if (cmd.match(/^move (north|south|east|west)$/)) {
-        powpowbot.sendMessage(user_id, player.move(cmd.split(' ')[1][0]))
+        player.move(cmd.split(' ')[1][0])
         return
     }
 
