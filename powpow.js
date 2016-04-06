@@ -123,7 +123,7 @@ var Util = {
 function Player(telegram_user_id, telegram_user_name) {
     // Fixed session properties
     this.sid = telegram_user_id
-    this.name = name
+    this.name = telegram_user_name
     this.room = null
     this.updated = Util.current_timestamp()
     this.renamed_at = 0
