@@ -113,7 +113,8 @@ var Util = {
     },
 
     colorize: function(color, text) {
-        return '<span style="color:' + color + '">' + text + '</span>'
+        return color
+        //return '<span style="color:' + color + '">' + text + '</span>'
     }
 }
 
@@ -361,6 +362,9 @@ Player.prototype.look_map = function() {
         'direction': this.direction,
         'me': true
     })
+
+    text += 'Players on this room: ' + Object.keys(this.room.players).length
+    text += '\n'
 
     txt += '<pre>'
 
@@ -713,7 +717,7 @@ powpowbot.on('message', function(msg) {
     }
 
     // Commands that the player can use even if it's dead
-    if (cmd.match(/^rename .{1,39}$/)) {
+    /*if (cmd.match(/^rename .{1,39}$/)) {
         var change = player.rename(cmd.trim().split(' ').slice(1).join(' '))
 
         if (change[0]) {
@@ -723,7 +727,7 @@ powpowbot.on('message', function(msg) {
         }
 
         return
-    }
+    }*/
 
     if (cmd == 'respawn') {
         powpowbot.sendMessage(user_id, player.respawn() ? 'Ok, you\'re back in the game' : 'You are already alive')
@@ -794,25 +798,30 @@ powpowbot.on('message', function(msg) {
 
     if (cmd.match(/^turn (north|south|east|west)$/)) {
         player.turn(cmd.split(' ')[1][0])
+        powpowbot.sendMessage(user_id, player.look_map(), {
+            parse_mode: 'HTML'
+        })
         return
     }
 
     if (cmd == 'turn around') {
         player.turn_around()
+        powpowbot.sendMessage(user_id, player.look_map(), {
+            parse_mode: 'HTML'
+        })
         return
     }
 
     if (cmd.match(/^move (north|south|east|west)$/)) {
         player.move(cmd.split(' ')[1][0])
+        powpowbot.sendMessage(user_id, player.look_map(), {
+            parse_mode: 'HTML'
+        })
         return
     }
 
     if (cmd == 'look') {
-    	var msg = 'Players on this room: ' + Object.keys(player.room.players).length
-    	msg += '\n'
-    	msg += player.look_map()
-
-        powpowbot.sendMessage(user_id, msg, {
+    	powpowbot.sendMessage(user_id, player.look_map(), {
         	parse_mode: 'HTML'
         })
         return
