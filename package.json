@@ -1,5 +1,5 @@
 {
-  "name": "PowPowBot",
+  "name": "powpowbot",
   "version": "0.0.1",
   "main": "powpow.js",
   "scripts": {
@@ -11,9 +11,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/dygufa/PowPowBot"
-  },
-  "scripts": {
-    "start": "node powpow.js"  
   },
   "dependencies": {
     "node-telegram-bot-api": "^0.21.1"
