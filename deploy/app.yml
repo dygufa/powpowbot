@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: powpowbot-app
+  namespace: powpowbot
+spec:
+  selector:
+    matchLabels:
+      app: powpowbot-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: powpowbot-app
+    spec:
+      imagePullSecrets:
+        - name: gitlab-registry
+      containers:
+        - name: powpowbot-app
+          image: registry.gitlab.com/dygufa/powpowbot:v$CI_PIPELINE_ID
+          env:
+            - name: POWPOWBOT_TOKEN
+              value: $POWPOWBOT_TOKEN
+          resources:
+            limits:
+              memory: 600Mi
+              cpu: 500m
+            requests:
+              memory: 50Mi
+              cpu: 5m
+---

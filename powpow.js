@@ -15,7 +15,6 @@ var powpowbot = new telegramBotAPI(process.env.POWPOWBOT_TOKEN, {
  * Game settings
  */
 var Settings = {
-    port: process.env.PORT || 3000,
     gun_max_available_ammo: 8,
     gun_max_ammo: 24,
     renaming_interval_limit: 10,
@@ -37,7 +36,7 @@ var Server = {
     respawn_places: [],
     page: null,
     started_at: null,
-    events: new(events.EventEmitter),
+    events: new (events.EventEmitter),
     players: {},
     rooms: {},
 }
@@ -46,7 +45,7 @@ var Server = {
  * Utility functions
  */
 var Util = {
-    generate_id: function() {
+    generate_id: function () {
         var random = Math.random().toString(36).substring(7),
             id = ''
 
@@ -60,7 +59,7 @@ var Util = {
         return id + Util.current_timestamp()
     },
 
-    player_name_exists: function(name) {
+    player_name_exists: function (name) {
         var exists = false
 
         for (var sid in Server.players) {
@@ -73,7 +72,7 @@ var Util = {
         return exists
     },
 
-    remove_inactive_players: function() {
+    remove_inactive_players: function () {
         var remove = [],
             count = 0,
             now = Util.current_timestamp()
@@ -81,7 +80,7 @@ var Util = {
         for (var sid in Server.players) {
             if (Server.players.hasOwnProperty(sid) && Server.players[sid].updated + 60 * 5 < now) {
                 remove.push(sid)
-                    ++count
+                ++count
             }
         }
 
@@ -93,11 +92,11 @@ var Util = {
         return count
     },
 
-    current_timestamp: function() {
+    current_timestamp: function () {
         return Math.floor(new Date().getTime() / 1000)
     },
 
-    generate_hit_message: function(who, killed) {
+    generate_hit_message: function (who, killed) {
         var msg
 
         if (killed)
@@ -141,10 +140,10 @@ function Player(telegram_user_id, telegram_user_name) {
     this.killed = 0
 }
 
-Player.prototype.join_room = function(room_name) {
+Player.prototype.join_room = function (room_name) {
     this.room = null
 
-    if (typeof(Server.rooms[room_name]) !== 'object') {
+    if (typeof (Server.rooms[room_name]) !== 'object') {
         this.room = Server.rooms[room_name] = new Room(room_name)
     } else {
         this.room = Server.rooms[room_name]
@@ -185,15 +184,15 @@ Player.prototype.rename = function(new_name) {
 }
 */
 
-Player.prototype.touch = function() {
+Player.prototype.touch = function () {
     this.updated = Util.current_timestamp()
 }
 
-Player.prototype.is_playing = function() {
+Player.prototype.is_playing = function () {
     return this.room !== null
 }
 
-Player.prototype.fire = function() {
+Player.prototype.fire = function () {
     var hit = this.visible_to_me(true),
         result = {
             killed: [],
@@ -208,40 +207,40 @@ Player.prototype.fire = function() {
 
     this.available_ammo--
 
-        for (var i = 0, j = hit.length; i < j; i++, ammo_power--) {
-            this.room.players[hit[i].sid].health -= ammo_power
+    for (var i = 0, j = hit.length; i < j; i++ , ammo_power--) {
+        this.room.players[hit[i].sid].health -= ammo_power
 
-            var killed = false
-            /*var msg_data = {
-                receiver: hit[i].sid,
-                text: null
-            }*/
+        var killed = false
+        /*var msg_data = {
+            receiver: hit[i].sid,
+            text: null
+        }*/
 
-            if (this.room.players[hit[i].sid].health <= 0) {
-                killed = true
+        if (this.room.players[hit[i].sid].health <= 0) {
+            killed = true
 
-                this.room.players[hit[i].sid].killed++
-                    this.room.players[hit[i].sid].x = null
-                this.room.players[hit[i].sid].y = null
+            this.room.players[hit[i].sid].killed++
+            this.room.players[hit[i].sid].x = null
+            this.room.players[hit[i].sid].y = null
 
-                this.kills++
+            this.kills++
 
-                    this.room.coordinates[hit[i].y][hit[i].x] = ['h', 'a'][Math.floor(Math.random() * 2)]
+            this.room.coordinates[hit[i].y][hit[i].x] = ['h', 'a'][Math.floor(Math.random() * 2)]
 
-                result.killed.push(Server.players[hit[i].sid].name)
-            } else {
-                result.hit.push(Server.players[hit[i].sid].name)
-            }
-
-            //msg_data.text = Util.generate_hit_message(this.name, killed)
-            // this.send_message(msg_data, hit[i].sid)
-            powpowbot.sendMessage(hit[i].sid, Util.generate_hit_message(this.name, killed));
+            result.killed.push(Server.players[hit[i].sid].name)
+        } else {
+            result.hit.push(Server.players[hit[i].sid].name)
         }
+
+        //msg_data.text = Util.generate_hit_message(this.name, killed)
+        // this.send_message(msg_data, hit[i].sid)
+        powpowbot.sendMessage(hit[i].sid, Util.generate_hit_message(this.name, killed));
+    }
 
     return result
 }
 
-Player.prototype.turn = function(direction) {
+Player.prototype.turn = function (direction) {
     direction = direction.toUpperCase()
 
     if (['N', 'S', 'E', 'W'].indexOf(direction) != -1) {
@@ -252,7 +251,7 @@ Player.prototype.turn = function(direction) {
     return false
 }
 
-Player.prototype.turn_around = function() {
+Player.prototype.turn_around = function () {
     var opposite = {
         N: 'S',
         S: 'N',
@@ -262,7 +261,7 @@ Player.prototype.turn_around = function() {
     this.turn(opposite[this.direction])
 }
 
-Player.prototype.move = function(direction) {
+Player.prototype.move = function (direction) {
     var success = true,
         x = this.x,
         y = this.y,
@@ -315,7 +314,7 @@ Player.prototype.move = function(direction) {
     return ''
 }
 
-Player.prototype.reload_gun = function(sid) {
+Player.prototype.reload_gun = function (sid) {
     if (this.available_ammo <= 0 && this.total_ammo <= 0)
         return false
 
@@ -333,7 +332,7 @@ Player.prototype.reload_gun = function(sid) {
     return [this.available_ammo, this.total_ammo]
 }
 
-Player.prototype.respawn = function() {
+Player.prototype.respawn = function () {
     if (this.health > 0)
         return false
 
@@ -351,7 +350,7 @@ Player.prototype.respawn = function() {
     return true
 }
 
-Player.prototype.look_map = function() {
+Player.prototype.look_map = function () {
     var y_len = Server.map.length,
         x_len = Server.map[0].length,
         visible = this.visible_to_me(),
@@ -403,7 +402,7 @@ Player.prototype.look_map = function() {
     return txt
 }
 
-Player.prototype.visible_to_me = function(only_enemies) {
+Player.prototype.visible_to_me = function (only_enemies) {
     var y_len = Server.map.length,
         x_len = Server.map[0].length,
         found = [],
@@ -443,7 +442,7 @@ Player.prototype.send_message = function(data, receiver) {
 }
 */
 
-Player.prototype.quit = function() {
+Player.prototype.quit = function () {
     if (this.room !== null) {
         this.room.kick(this.sid)
     }
@@ -470,7 +469,7 @@ function Room(name) {
     }
 }
 
-Room.prototype.add_player = function(player) {
+Room.prototype.add_player = function (player) {
     var respawn_place = this.find_respawn_position()
 
     player.x = respawn_place.x
@@ -484,11 +483,11 @@ Room.prototype.add_player = function(player) {
     this.coordinates[respawn_place.y][respawn_place.x] = player
 }
 
-Room.prototype.has_player = function(sid) {
-    return typeof(this.players[sid]) !== 'undefined';
+Room.prototype.has_player = function (sid) {
+    return typeof (this.players[sid]) !== 'undefined';
 }
 
-Room.prototype.kick = function(sid) {
+Room.prototype.kick = function (sid) {
     if (!this.has_player(sid)) {
         return false
     }
@@ -508,8 +507,8 @@ Room.prototype.kick = function(sid) {
     delete this.players[sid]
 }
 
-Room.prototype.has_item = function(x, y, only_enemies) {
-    var cond = typeof(this.coordinates[y][x]) !== 'undefined' && this.coordinates[y][x] !== null
+Room.prototype.has_item = function (x, y, only_enemies) {
+    var cond = typeof (this.coordinates[y][x]) !== 'undefined' && this.coordinates[y][x] !== null
 
     if (only_enemies)
         cond = cond && this.coordinates[y][x].constructor.name == 'Player'
@@ -517,7 +516,7 @@ Room.prototype.has_item = function(x, y, only_enemies) {
     return cond
 }
 
-Room.prototype.find_item = function(x, y, only_enemies) {
+Room.prototype.find_item = function (x, y, only_enemies) {
     only_enemies = !!only_enemies
 
     if (this.has_item(x, y, only_enemies)) {
@@ -543,7 +542,7 @@ Room.prototype.find_item = function(x, y, only_enemies) {
     return null
 }
 
-Room.prototype.score = function() {
+Room.prototype.score = function () {
     var players_array = [],
         players_count = 0,
         larger_name_length = 0,
@@ -556,13 +555,13 @@ Room.prototype.score = function() {
             larger_name_length = length
 
         players_array.push({
-                'name': this.players[sid].name,
-                'data': this.players[sid]
-            })
-            ++players_count
+            'name': this.players[sid].name,
+            'data': this.players[sid]
+        })
+        ++players_count
     }
 
-    players_array.sort(function(a, b) {
+    players_array.sort(function (a, b) {
         return (b.data.kills - a.data.kills) + (a.data.killed - b.data.killed)
     })
 
@@ -597,12 +596,12 @@ Room.prototype.score = function() {
     for (var i = 0; i < expand; i++) text += '-'
     text += '+-------+--------+\n'
 
-	text += '</pre>'
+    text += '</pre>'
 
     return text
 }
 
-Room.prototype.find_respawn_position = function() {
+Room.prototype.find_respawn_position = function () {
     var count = Server.respawn_places.length,
         index = Math.floor(Math.random() * count)
 
@@ -623,7 +622,7 @@ Room.prototype.find_respawn_position = function() {
     return place
 }
 
-Room.prototype.is_safe_place = function(x, y) {
+Room.prototype.is_safe_place = function (x, y) {
     var y_len = Server.map.length,
         x_len = Server.map[0].length
 
@@ -654,7 +653,7 @@ Room.prototype.is_safe_place = function(x, y) {
     return true
 }
 
-powpowbot.on('message', function(msg) {
+powpowbot.on('message', function (msg) {
     var cmd = msg.text.toLowerCase(),
         user_id = msg.from.id,
         user_first_name = msg.from.first_name,
@@ -670,22 +669,22 @@ powpowbot.on('message', function(msg) {
     }
 
     if (cmd.match(/^\/(start|help)$/)) {
-    	var instructions = "* /room - Choose the room \n"
-		instructions += "* /quit - Quit the room \n"
-		instructions += "* look - Show the room map and the enemies on your front \n"
-		instructions += "* move north/south/west/east - Move to another place \n"
-		instructions += "* turn north/south/west/east/around - Turn to another direction so you can view and fire your enemies  \n"
-		instructions += "* fire - Fire (o rly?) \n"
-		instructions += "* ammo - Show how much ammo you have \n"
-		instructions += "* health - Show how health you have \n"
-		instructions += "* reload - Reload your gun \n"
-		instructions += "* score - Show score table \n"
-		instructions += "* respawn - Respawn if you are dead \n\n"
-		instructions += "Please choose a room by typing '/room <room name>' (e.g.: /room mygrouproom) to start playing!"
+        var instructions = "* /room - Choose the room \n"
+        instructions += "* /quit - Quit the room \n"
+        instructions += "* look - Show the room map and the enemies on your front \n"
+        instructions += "* move north/south/west/east - Move to another place \n"
+        instructions += "* turn north/south/west/east/around - Turn to another direction so you can view and fire your enemies  \n"
+        instructions += "* fire - Fire (o rly?) \n"
+        instructions += "* ammo - Show how much ammo you have \n"
+        instructions += "* health - Show how health you have \n"
+        instructions += "* reload - Reload your gun \n"
+        instructions += "* score - Show score table \n"
+        instructions += "* respawn - Respawn if you are dead \n\n"
+        instructions += "Please choose a room by typing '/room <room name>' (e.g.: /room mygrouproom) to start playing!"
 
-    	powpowbot.sendMessage(user_id, instructions)
+        powpowbot.sendMessage(user_id, instructions)
 
-    	return
+        return
     }
 
     if (match = cmd.match(/^\/room (.*)$/)) {
@@ -713,8 +712,8 @@ powpowbot.on('message', function(msg) {
     }
 
     if (player.room == null) {
-    	powpowbot.sendMessage(user_id, 'Right now you\'re not in any room.\nType \'/room <room name>\' (e.g.: /room mygrouproom) to start playing!')
-    	return
+        powpowbot.sendMessage(user_id, 'Right now you\'re not in any room.\nType \'/room <room name>\' (e.g.: /room mygrouproom) to start playing!')
+        return
     }
 
     // Commands that the player can use even if it's dead
@@ -737,7 +736,7 @@ powpowbot.on('message', function(msg) {
 
     if (cmd == 'score') {
         powpowbot.sendMessage(user_id, player.room.score(), {
-        	parse_mode: 'HTML'
+            parse_mode: 'HTML'
         })
         return
     }
@@ -762,7 +761,7 @@ powpowbot.on('message', function(msg) {
     if (cmd == 'reload') {
         var info = player.reload_gun()
 
-        if (typeof(info) === 'object') {
+        if (typeof (info) === 'object') {
             powpowbot.sendMessage(user_id, 'You\'ve reloaded. Ammo: ' + info[0] + '/' + info[1])
         } else {
             powpowbot.sendMessage(user_id, 'You\'re out of ammo')
@@ -824,8 +823,8 @@ powpowbot.on('message', function(msg) {
     }
 
     if (cmd == 'look') {
-    	powpowbot.sendMessage(user_id, player.look_map(), {
-        	parse_mode: 'HTML'
+        powpowbot.sendMessage(user_id, player.look_map(), {
+            parse_mode: 'HTML'
         })
         return
     }
